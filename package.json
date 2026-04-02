@@ -22,7 +22,13 @@
     },
     "win": {
       "icon": "assets/icons/icon.ico",
+      "publisherName": "Andras Corda",
+      "verifyUpdateCodeSignature": false,
       "target": "nsis"
+    },
+    "nsis": {
+      "installerIcon": "assets/icons/icon.ico",
+      "shortcutName": "Modulo"
     }
   }
 }
