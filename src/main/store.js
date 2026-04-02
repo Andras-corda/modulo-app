@@ -22,7 +22,7 @@ const DEFAULTS = {
     fontScale:   1,
     sounds:      true,
     startup:     false,
-    catalogUrl:  'https://modulo-web-production.up.railway.app',
+    catalogUrl: 'https://modulo-web-production.up.railway.app',
     timerOverlay: { enabled: true, position: 'bottom-right', opacity: 0.9 },
   },
   profile: {
