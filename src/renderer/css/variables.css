@@ -1,0 +1,84 @@
+/* ── Modulo Design System — Variables ── */
+
+:root {
+  /* Blue night palette */
+  --blue:        #4285F4;
+  --blue-light:  #669DF6;
+  --blue-dark:   #1a56d6;
+  --green:       #34A853;
+  --red:         #EA4335;
+  --yellow:      #FBBC04;
+  --orange:      #FF6D00;
+  --purple:      #9C27B0;
+  --teal:        #00BCD4;
+
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-full: 9999px;
+
+  --shadow-sm:   0 1px 3px rgba(0,0,0,.18);
+  --shadow-md:   0 4px 12px rgba(0,0,0,.24);
+  --shadow-lg:   0 8px 24px rgba(0,0,0,.32);
+
+  --font-sans:  'Google Sans', 'Roboto', sans-serif;
+  --font-mono:  'Roboto Mono', 'Courier New', monospace;
+  --font-scale: 1;
+
+  --sidebar-width:          220px;
+  --sidebar-collapsed-width: 56px;
+  --titlebar-height:        36px;
+
+  --transition: 150ms ease;
+}
+
+/* ── Dark theme (default) ── */
+[data-theme="dark"], :root {
+  --bg-base:      #0f1117;
+  --bg-surface:   #161b27;
+  --bg-card:      #1e2435;
+  --bg-elevated:  #252d40;
+  --bg-hover:     rgba(255,255,255,.06);
+  --bg-active:    rgba(66,133,244,.18);
+
+  --text-primary:   #e8eaf0;
+  --text-secondary: #9ba3b8;
+  --text-tertiary:  #5c6380;
+  --text-disabled:  #3d4260;
+  --text-accent:    #669DF6;
+
+  --border:        rgba(255,255,255,.08);
+  --border-strong: rgba(255,255,255,.16);
+
+  --sidebar-bg:    #0d1120;
+  --titlebar-bg:   #0a0e18;
+
+  --scrollbar-thumb: rgba(255,255,255,.12);
+  --scrollbar-hover: rgba(255,255,255,.22);
+}
+
+/* ── Light theme ── */
+[data-theme="light"] {
+  --bg-base:      #f5f0e8;
+  --bg-surface:   #ede8df;
+  --bg-card:      #ffffff;
+  --bg-elevated:  #ffffff;
+  --bg-hover:     rgba(0,0,0,.04);
+  --bg-active:    rgba(66,133,244,.10);
+
+  --text-primary:   #1a1f2e;
+  --text-secondary: #4a5166;
+  --text-tertiary:  #8b93a8;
+  --text-disabled:  #c0c5d4;
+  --text-accent:    #1a56d6;
+
+  --border:        rgba(0,0,0,.10);
+  --border-strong: rgba(0,0,0,.20);
+
+  --sidebar-bg:    #ede8df;
+  --titlebar-bg:   #e0dbd2;
+
+  --scrollbar-thumb: rgba(0,0,0,.12);
+  --scrollbar-hover: rgba(0,0,0,.22);
+}
