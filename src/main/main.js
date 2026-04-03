@@ -26,6 +26,7 @@ function createWindow() {
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: false,
+      webSecurity: false, // Permet fetch() vers Railway depuis file://
     },
     icon: path.join(__dirname, '../../assets/icons/icon.png'),
   });
