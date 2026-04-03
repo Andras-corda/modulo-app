@@ -204,16 +204,10 @@ const ModuleLoader = (() => {
       const code = await window.modulo.moduleFiles.readFile(mod.id);
       if (!code) throw new Error('Fichier JS introuvable');
 
-      const blob = new Blob([code], { type: 'application/javascript' });
-      const url  = URL.createObjectURL(blob);
-
-      await new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = url;
-        script.onload = () => { URL.revokeObjectURL(url); resolve(); };
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
+      // Script inline — s'exécute dans le même window (contextIsolation safe)
+      const script = document.createElement('script');
+      script.textContent = code;
+      document.head.appendChild(script);
 
       _loaded.add(mod.id);
       DevLog.info(`[ModuleLoader] Loaded: ${mod.id}`);
