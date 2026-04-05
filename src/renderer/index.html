@@ -54,7 +54,16 @@
 
       <!-- Section fixe : toujours visible -->
       <div class="nav-section">Principal</div>
-      <div class="nav-item active" data-key="marketplace">
+      <div class="nav-item active" data-key="dashboard">
+        <span class="nav-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>
+          </svg>
+        </span>
+        <span class="nav-label" data-i18n="dashboard">Dashboard</span>
+        <span class="nav-tooltip" data-i18n="dashboard">Dashboard</span>
+      </div>
+      <div class="nav-item" data-key="marketplace">
         <span class="nav-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
@@ -76,13 +85,12 @@
 
     <!-- Section basse : Profil + Paramètres -->
     <div style="border-top:1px solid var(--border);padding:8px 0">
-      <div class="nav-item" data-key="profile">
-        <span class="nav-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-          </svg>
+      <!-- Profil utilisateur bas sidebar -->
+      <div class="nav-item nav-profile-item" data-key="profile" id="sidebar-profile-btn">
+        <span class="nav-icon" id="sidebar-avatar" style="width:28px;height:28px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;flex-shrink:0;overflow:hidden">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </span>
-        <span class="nav-label">Profil</span>
+        <span class="nav-label" id="sidebar-username" style="font-size:12px;font-weight:500">Profil</span>
         <span class="nav-tooltip">Profil</span>
       </div>
       <div class="nav-item" data-key="settings">
@@ -151,6 +159,7 @@
   <!-- 6. Pages fixes -->
   <script src="pages/marketplace.js"></script>
   <script src="pages/settings.js"></script>
+  <script src="pages/dashboard.js"></script>
   <script src="pages/profile.js"></script>
 
   <!-- 7. Bootstrap (doit être en dernier) -->

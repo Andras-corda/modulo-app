@@ -113,6 +113,7 @@ async function bootstrap() {
   Router.init(document.getElementById('app-content'));
 
   // 3. Enregistrer les routes fixes
+  Router.register('dashboard',  renderDashboard);
   Router.register('marketplace', renderMarketplace);
   Router.register('settings',   renderSettings);
   Router.register('profile',    renderProfile);
@@ -137,7 +138,10 @@ async function bootstrap() {
   await rebuildNav();
 
   // 6. Page initiale
-  Router.navigate('marketplace');
+  Router.navigate('dashboard');
+
+  // Charger le profil dans la sidebar
+  try { await _updateSidebarProfile(); } catch { /* profile page not loaded yet */ }
 
   DevLog.info('[Bootstrap] Modulo ready');
 }
