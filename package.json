@@ -21,6 +21,8 @@
       "output": "dist"
     },
     "win": {
+      "icon": "assets/icons/icon.ico",
+      "publisherName": "Andras Corda",
       "target": "nsis"
     }
   }
