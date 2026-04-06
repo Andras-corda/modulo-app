@@ -1,11 +1,12 @@
-// ── Page Dashboard ──
+// ── Dashboard ──
 
 async function renderDashboard(container) {
   const profile  = (await window.modulo.profile.get()) ?? {};
   const settings = (await window.modulo.settings.get()) ?? {};
   const lang     = settings.lang ?? 'fr';
 
-  const greet = () => {
+  // ── Greeting ────────────────────────────────────────────────────────────
+  function _greeting() {
     const h = new Date().getHours();
     if (lang === 'en') {
       if (h < 12) return 'Good morning';
@@ -15,200 +16,258 @@ async function renderDashboard(container) {
     if (h < 12) return 'Bonjour';
     if (h < 18) return 'Bon après-midi';
     return 'Bonsoir';
+  }
+
+  // ── Météo — Open-Meteo (Liège) ──────────────────────────────────────────
+  const WMO_CODES = {
+    0:  { icon:'☀️', label:'Clear sky' },
+    1:  { icon:'🌤', label:'Mainly clear' },
+    2:  { icon:'⛅', label:'Partly cloudy' },
+    3:  { icon:'☁️', label:'Overcast' },
+    45: { icon:'🌫', label:'Fog' },
+    48: { icon:'🌫', label:'Icy fog' },
+    51: { icon:'🌦', label:'Light drizzle' },
+    53: { icon:'🌦', label:'Drizzle' },
+    55: { icon:'🌧', label:'Heavy drizzle' },
+    61: { icon:'🌧', label:'Light rain' },
+    63: { icon:'🌧', label:'Rain' },
+    65: { icon:'🌧', label:'Heavy rain' },
+    71: { icon:'🌨', label:'Light snow' },
+    73: { icon:'🌨', label:'Snow' },
+    75: { icon:'❄️', label:'Heavy snow' },
+    77: { icon:'🌨', label:'Snow grains' },
+    80: { icon:'🌦', label:'Rain showers' },
+    81: { icon:'🌧', label:'Heavy showers' },
+    82: { icon:'⛈', label:'Violent showers' },
+    95: { icon:'⛈', label:'Thunderstorm' },
+    96: { icon:'⛈', label:'Thunderstorm + hail' },
+    99: { icon:'⛈', label:'Severe thunderstorm' },
   };
 
-  const name = profile.pseudo || (lang === 'en' ? 'there' : '');
+  async function _fetchWeather() {
+    try {
+      const res  = await fetch(
+        'https://api.open-meteo.com/v1/forecast?latitude=50.6402&longitude=5.5718' +
+        '&current=temperature_2m,weathercode,windspeed_10m' +
+        '&timezone=Europe%2FBrussels'
+      );
+      const data = await res.json();
+      const cur  = data.current;
+      const wmo  = WMO_CODES[cur.weathercode] ?? { icon:'🌡', label:'Unknown' };
+      return {
+        temp:  Math.round(cur.temperature_2m),
+        icon:  wmo.icon,
+        label: wmo.label,
+        city:  'Liège',
+      };
+    } catch {
+      return null;
+    }
+  }
 
-  // Charger les stats de tous les modules
-  let todos = [], notes = [], events = [], reminders = [], timers = [], checklists = [];
-  try {
-    [todos, notes, events, reminders, timers, checklists] = await Promise.all([
-      window.modulo.todos.getAll(),
-      window.modulo.notes.getAll(),
-      window.modulo.events.getAll(),
-      window.modulo.reminders.getAll(),
-      window.modulo.timers.getAll(),
-      window.modulo.checklists.getAll(),
-    ]);
-    todos      = todos      ?? [];
-    notes      = notes?.filter(n => !n.tags?.includes('__diagram__') && !n.tags?.includes('__datafile__') && !n.tags?.includes('__structogram__')) ?? [];
-    events     = events     ?? [];
-    reminders  = reminders  ?? [];
-    timers     = timers     ?? [];
-    checklists = checklists ?? [];
-  } catch { /* modules pas installés */ }
+  // ── SVG Horloge analogique ───────────────────────────────────────────────
+  function _analogClockSvg() {
+    return `
+      <svg id="dash-analog" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"
+        style="position:absolute;inset:0;width:100%;height:100%;opacity:.055;pointer-events:none">
 
-  const todayStr    = today();
-  const doneTodos   = todos.filter(t => t.done).length;
-  const lateTodos   = todos.filter(t => !t.done && t.dueDate && t.dueDate < todayStr).length;
-  const todayEvents = events.filter(e => e.date === todayStr);
-  const lateRem     = reminders.filter(r => !r.done && r.datetime && r.datetime < new Date().toISOString());
+        <!-- Graduations -->
+        ${Array.from({length:60}, (_,i) => {
+          const a  = (i / 60) * 2 * Math.PI - Math.PI / 2;
+          const r1 = i % 5 === 0 ? 82 : 88;
+          const r2 = 92;
+          const x1 = 100 + r1 * Math.cos(a);
+          const y1 = 100 + r1 * Math.sin(a);
+          const x2 = 100 + r2 * Math.cos(a);
+          const y2 = 100 + r2 * Math.sin(a);
+          const w  = i % 5 === 0 ? 1.8 : 0.8;
+          return `<line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}"
+            stroke="white" stroke-width="${w}" stroke-linecap="round"/>`;
+        }).join('')}
 
-  // Prochains événements (7 jours)
-  const soon = new Date(); soon.setDate(soon.getDate() + 7);
-  const soonStr = soon.toISOString().slice(0, 10);
-  const upcomingEvents = events
-    .filter(e => e.date >= todayStr && e.date <= soonStr)
-    .sort((a, b) => a.date.localeCompare(b.date))
-    .slice(0, 5);
+        <!-- Cercle extérieur -->
+        <circle cx="100" cy="100" r="94" fill="none" stroke="white" stroke-width="1.2" opacity=".5"/>
 
-  // Tâches urgentes
-  const urgentTodos = todos
-    .filter(t => !t.done && (t.priority === 'high' || (t.dueDate && t.dueDate <= todayStr)))
-    .slice(0, 6);
+        <!-- Aiguille heures -->
+        <line id="dash-h" x1="100" y1="100" x2="100" y2="45"
+          stroke="white" stroke-width="3.5" stroke-linecap="round"/>
 
-  // Modules installés
-  const data      = (await window.modulo.modules.get()) ?? { installed: [] };
-  const installed = data.installed ?? [];
+        <!-- Aiguille minutes -->
+        <line id="dash-m" x1="100" y1="100" x2="100" y2="28"
+          stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+
+        <!-- Aiguille secondes -->
+        <line id="dash-s" x1="100" y1="108" x2="100" y2="22"
+          stroke="white" stroke-width="1" stroke-linecap="round" opacity=".7"/>
+
+        <!-- Centre -->
+        <circle cx="100" cy="100" r="3.5" fill="white"/>
+        <circle cx="100" cy="100" r="1.5" fill="#0f1117"/>
+      </svg>
+    `;
+  }
+
+  // ── Rendu ────────────────────────────────────────────────────────────────
+  const pseudo  = profile.pseudo || '';
+  const weather = await _fetchWeather();
 
   container.innerHTML = `
-    <div class="page" style="max-width:900px;padding:28px 32px">
+    <div style="
+      position:relative;
+      display:flex;align-items:center;justify-content:center;
+      height:calc(100vh - 36px);overflow:hidden;
+    ">
 
-      <!-- Salutation -->
-      <div style="margin-bottom:32px">
-        <div style="font-size:24px;font-weight:500;color:var(--text-primary)">
-          ${greet()}${name ? ', <span style="color:var(--blue-light)">' + name + '</span>' : ''} 👋
-        </div>
-        <div style="font-size:13px;color:var(--text-tertiary);margin-top:4px">
-          ${new Date().toLocaleDateString(lang === 'en' ? 'en-US' : 'fr-FR', { weekday:'long', day:'numeric', month:'long', year:'numeric' })}
+      <!-- Horloge analogique en fond -->
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none">
+        <div style="width:min(70vh,70vw);height:min(70vh,70vw);max-width:560px;max-height:560px;position:relative">
+          ${_analogClockSvg()}
         </div>
       </div>
 
-      <!-- Cartes stats -->
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:32px">
-        ${_dashStat(icon('check','18px'), lang==='en'?'Tasks':'Tâches', `${doneTodos}/${todos.length}`, lateTodos ? `${lateTodos} ${lang==='en'?'late':'en retard'}` : null, lateTodos ? 'var(--red)' : 'var(--blue)')}
-        ${_dashStat(icon('note','18px'), 'Notes', notes.length, null, 'var(--purple,#9C27B0)')}
-        ${_dashStat(icon('calendar','18px'), lang==='en'?'Today':'Aujourd\'hui', todayEvents.length, lang==='en'?'event(s)':'événement(s)', 'var(--green,#388E3C)')}
-        ${_dashStat(icon('bell','18px'), lang==='en'?'Reminders':'Rappels', reminders.filter(r=>!r.done).length, lateRem.length ? `${lateRem.length} ${lang==='en'?'due':'en retard'}` : null, lateRem.length ? 'var(--red)' : 'var(--yellow,#F57F17)')}
-        ${_dashStat(icon('list','18px'), lang==='en'?'Lists':'Listes', checklists.length, null, 'var(--cyan,#00838F)')}
-      </div>
+      <!-- Contenu centré -->
+      <div style="position:relative;text-align:center;display:flex;flex-direction:column;align-items:center;gap:0">
 
-      <!-- Grille principale -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+        <!-- Greeting -->
+        <div id="dash-greeting" style="
+          font-size:13px;font-weight:400;letter-spacing:.6px;
+          color:rgba(255,255,255,.35);margin-bottom:28px;
+        ">${_greeting()}${pseudo ? ', ' + pseudo : ''}</div>
 
-        <!-- Tâches urgentes -->
-        <div class="card">
-          <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:14px;display:flex;align-items:center;gap:6px">
-            ${icon('check','14px')}
-            ${lang==='en'?'Priority tasks':'Tâches prioritaires'}
-            ${lateTodos ? `<span style="margin-left:auto;font-size:10px;color:var(--red);background:rgba(234,67,53,.12);padding:2px 7px;border-radius:var(--radius-full)">${lateTodos} ${lang==='en'?'late':'en retard'}</span>` : ''}
-          </div>
-          ${!urgentTodos.length ? `
-            <div style="font-size:12px;color:var(--text-tertiary);text-align:center;padding:12px 0">
-              ${lang==='en'?'No urgent tasks':'Aucune tâche urgente'} 🎉
-            </div>
-          ` : urgentTodos.map(t => `
-            <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border)">
-              <div style="width:12px;height:12px;border-radius:3px;border:1.5px solid ${t.priority==='high'?'var(--red)':'var(--border-strong)'};flex-shrink:0"></div>
-              <span style="font-size:12px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.text}</span>
-              ${t.dueDate && t.dueDate < todayStr ? `<span style="font-size:10px;color:var(--red)">${t.dueDate}</span>` : ''}
-              ${t.priority==='high' ? `<span style="font-size:10px;color:var(--red);font-weight:600">!</span>` : ''}
-            </div>
-          `).join('')}
-          <button class="btn btn-ghost btn-sm" style="margin-top:10px;font-size:11px;width:100%" onclick="Router.navigate('todos')">
-            ${lang==='en'?'See all tasks →':'Voir toutes les tâches →'}
-          </button>
+        <!-- Horloge digitale -->
+        <div style="display:flex;align-items:flex-start;line-height:1">
+          <div id="dash-time" style="
+            font-size:clamp(72px,12vw,128px);
+            font-weight:300;letter-spacing:-4px;
+            color:rgba(255,255,255,.92);
+            font-variant-numeric:tabular-nums;
+            font-family:var(--font-mono);
+          ">00:00</div>
+          <sup id="dash-sec" style="
+            font-size:clamp(20px,3vw,32px);
+            font-weight:300;
+            color:rgba(255,255,255,.3);
+            font-family:var(--font-mono);
+            margin-top:.3em;margin-left:6px;
+            font-variant-numeric:tabular-nums;
+          ">00</sup>
         </div>
 
-        <!-- Événements à venir -->
-        <div class="card">
-          <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:14px;display:flex;align-items:center;gap:6px">
-            ${icon('calendar','14px')}
-            ${lang==='en'?'Upcoming (7 days)':'Prochains événements (7j)'}
-          </div>
-          ${!upcomingEvents.length ? `
-            <div style="font-size:12px;color:var(--text-tertiary);text-align:center;padding:12px 0">
-              ${lang==='en'?'No upcoming events':'Aucun événement à venir'}
-            </div>
-          ` : upcomingEvents.map(e => `
-            <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border)">
-              <div style="width:3px;height:32px;border-radius:2px;background:${e.color??'var(--blue)'};flex-shrink:0"></div>
-              <div style="flex:1;min-width:0">
-                <div style="font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${e.title}</div>
-                <div style="font-size:10px;color:var(--text-tertiary)">${e.date === todayStr ? (lang==='en'?'Today':'Aujourd\'hui') : formatDate(e.date)}</div>
-              </div>
-            </div>
-          `).join('')}
-          <button class="btn btn-ghost btn-sm" style="margin-top:10px;font-size:11px;width:100%" onclick="Router.navigate('calendar')">
-            ${lang==='en'?'Open calendar →':'Ouvrir le calendrier →'}
-          </button>
-        </div>
+        <!-- Date -->
+        <div id="dash-date" style="
+          font-size:13px;font-weight:500;letter-spacing:3px;
+          text-transform:uppercase;color:rgba(255,255,255,.3);
+          margin-top:12px;
+        ">—</div>
 
-        <!-- Modules installés -->
-        <div class="card">
-          <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:14px;display:flex;align-items:center;gap:6px">
-            ${icon('dashboard','14px')}
-            ${lang==='en'?'Installed modules':'Modules installés'}
-            <span style="margin-left:auto;font-size:11px;color:var(--text-tertiary)">${installed.length}</span>
+        <!-- Météo pill -->
+        ${weather ? `
+          <div style="
+            margin-top:24px;
+            display:inline-flex;align-items:center;gap:0;
+            background:rgba(255,255,255,.06);
+            border:1px solid rgba(255,255,255,.10);
+            border-radius:9999px;
+            padding:6px 16px;
+            font-size:13px;color:rgba(255,255,255,.55);
+            backdrop-filter:blur(8px);
+          ">
+            <span style="font-size:16px;margin-right:8px">${weather.icon}</span>
+            <span style="font-weight:500;color:rgba(255,255,255,.75)">${weather.temp}°C</span>
+            <span style="margin:0 10px;opacity:.3">·</span>
+            <span>${weather.label}</span>
+            <span style="margin:0 10px;opacity:.3">|</span>
+            <span style="letter-spacing:.3px">${weather.city}</span>
           </div>
-          ${!installed.length ? `
-            <div style="font-size:12px;color:var(--text-tertiary);text-align:center;padding:12px 0">
-              ${lang==='en'?'No modules installed yet':'Aucun module installé'}
-            </div>
-            <button class="btn btn-primary btn-sm" style="width:100%;margin-top:8px" onclick="Router.navigate('marketplace')">
-              ${lang==='en'?'Browse marketplace':'Découvrir le marketplace'}
-            </button>
-          ` : `
-            <div style="display:flex;flex-wrap:wrap;gap:6px">
-              ${installed.map(id => {
-                const mod = ModuleManager.getCatalog().find(m => m.id === id);
-                return `<div style="display:flex;align-items:center;gap:5px;padding:4px 9px;border-radius:var(--radius-md);background:var(--bg-elevated);cursor:pointer;font-size:11px" onclick="Router.navigate('${mod?.navKey??id}')">
-                  <span style="color:${mod?.color??'var(--blue)'}">${icon(mod?.icon??'dashboard','13px')}</span>
-                  ${mod?.name??id}
-                </div>`;
-              }).join('')}
-            </div>
-          `}
-        </div>
-
-        <!-- À propos / Créateur -->
-        <div class="card" style="background:linear-gradient(135deg,rgba(66,133,244,.06) 0%,transparent 100%)">
-          <div style="font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:14px;display:flex;align-items:center;gap:6px">
-            ${icon('eye','14px')} Modulo
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-            <div style="width:40px;height:40px;border-radius:10px;background:var(--blue);display:flex;align-items:center;justify-content:center">
-              <svg width="22" height="22" viewBox="0 0 20 20" fill="none">
-                <rect x="2" y="2" width="7" height="7" rx="2" fill="#fff"/>
-                <rect x="11" y="2" width="7" height="7" rx="2" fill="#fff" opacity=".6"/>
-                <rect x="2" y="11" width="7" height="7" rx="2" fill="#fff" opacity=".6"/>
-                <rect x="11" y="11" width="7" height="7" rx="2" fill="#fff" opacity=".3"/>
-              </svg>
-            </div>
-            <div>
-              <div style="font-size:13px;font-weight:500">Modulo v1.4.7</div>
-              <div style="font-size:11px;color:var(--text-tertiary)">par <span style="color:var(--blue-light)">R3tr0___</span></div>
-            </div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:6px">
-            <button class="btn btn-secondary btn-sm dash-ext-link" data-url="https://discord.gg/8JPP3wDd6e" style="justify-content:flex-start;gap:8px;font-size:11px">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color:#5865F2"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
-              Discord — R3tr0___
-            </button>
-            <button class="btn btn-secondary btn-sm dash-ext-link" data-url="https://andras-corda.github.io/portfolio-github-hosting/" style="justify-content:flex-start;gap:8px;font-size:11px">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-              Portfolio
-            </button>
-          </div>
-        </div>
+        ` : ''}
 
       </div>
     </div>
   `;
 
-  // Liens externes
-  container.querySelectorAll('.dash-ext-link').forEach(btn => {
-    btn.addEventListener('click', () => window.modulo.openExternal(btn.dataset.url));
+  // ── Tick (chaque seconde) ────────────────────────────────────────────────
+  function _tick() {
+    const now = new Date();
+    const hh  = now.getHours().toString().padStart(2, '0');
+    const mm  = now.getMinutes().toString().padStart(2, '0');
+    const ss  = now.getSeconds();
+    const sss = ss.toString().padStart(2, '0');
+
+    // Digitale
+    const timeEl = container.querySelector('#dash-time');
+    const secEl  = container.querySelector('#dash-sec');
+    if (timeEl) timeEl.textContent = `${hh}:${mm}`;
+    if (secEl)  secEl.textContent  = sss;
+
+    // Date
+    const dateEl = container.querySelector('#dash-date');
+    if (dateEl) {
+      const days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      if (lang !== 'en') {
+        const daysFr   = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+        const monthsFr = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+        dateEl.textContent = `${daysFr[now.getDay()]} ${now.getDate()} ${monthsFr[now.getMonth()]} ${now.getFullYear()}`;
+      } else {
+        dateEl.textContent = `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+      }
+    }
+
+    // Greeting adaptatif à l'heure
+    const greetEl = container.querySelector('#dash-greeting');
+    if (greetEl) greetEl.textContent = _greeting() + (pseudo ? ', ' + pseudo : '');
+
+    // Analogique
+    const h   = (now.getHours() % 12) + now.getMinutes() / 60 + ss / 3600;
+    const m   = now.getMinutes() + ss / 60;
+    const s   = ss + now.getMilliseconds() / 1000;
+
+    const hAngle = (h / 12) * 360;
+    const mAngle = (m / 60) * 360;
+    const sAngle = (s / 60) * 360;
+
+    _rotateHand('dash-h', hAngle, 100, 100, 45);
+    _rotateHand('dash-m', mAngle, 100, 100, 28);
+    _rotateHandSec('dash-s', sAngle, 100, 100, 22, 108);
+  }
+
+  function _rotateHand(id, angleDeg, cx, cy, tipY) {
+    const el = container.querySelector(`#${id}`);
+    if (!el) return;
+    const r   = (angleDeg * Math.PI) / 180;
+    const len = cy - tipY;
+    const x2  = cx + len * Math.sin(r);
+    const y2  = cy - len * Math.cos(r);
+    el.setAttribute('x2', x2.toFixed(3));
+    el.setAttribute('y2', y2.toFixed(3));
+  }
+
+  function _rotateHandSec(id, angleDeg, cx, cy, tipY, tailY) {
+    const el = container.querySelector(`#${id}`);
+    if (!el) return;
+    const r     = (angleDeg * Math.PI) / 180;
+    const lenFw = cy - tipY;
+    const lenBk = tailY - cy;
+    const x2 = cx + lenFw * Math.sin(r);
+    const y2 = cy - lenFw * Math.cos(r);
+    const x1 = cx - lenBk * Math.sin(r);
+    const y1 = cy + lenBk * Math.cos(r);
+    el.setAttribute('x1', x1.toFixed(3));
+    el.setAttribute('y1', y1.toFixed(3));
+    el.setAttribute('x2', x2.toFixed(3));
+    el.setAttribute('y2', y2.toFixed(3));
+  }
+
+  // Démarrer immédiatement puis toutes les secondes
+  _tick();
+  const _interval = setInterval(_tick, 1000);
+
+  // Nettoyer l'interval quand on quitte la page
+  const _observer = new MutationObserver(() => {
+    if (!document.body.contains(container)) {
+      clearInterval(_interval);
+      _observer.disconnect();
+    }
   });
-}
-
-function _dashStat(iconHtml, label, value, sub, color) {
-  return `
-    <div class="card" style="padding:16px">
-      <div style="color:${color};margin-bottom:6px">${iconHtml}</div>
-      <div style="font-size:22px;font-weight:600;color:var(--text-primary);line-height:1">${value}</div>
-      <div style="font-size:11px;color:var(--text-secondary);margin-top:4px">${label}</div>
-      ${sub ? `<div style="font-size:10px;color:${color};margin-top:2px">${sub}</div>` : ''}
-    </div>
-  `;
+  _observer.observe(document.body, { childList: true, subtree: true });
 }
