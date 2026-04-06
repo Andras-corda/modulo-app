@@ -176,7 +176,7 @@ async function renderDashboard(container) {
               </svg>
             </div>
             <div>
-              <div style="font-size:13px;font-weight:500">Modulo v1.3.2</div>
+              <div style="font-size:13px;font-weight:500">Modulo v1.4.7</div>
               <div style="font-size:11px;color:var(--text-tertiary)">par <span style="color:var(--blue-light)">R3tr0___</span></div>
             </div>
           </div>

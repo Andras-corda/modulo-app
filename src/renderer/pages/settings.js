@@ -54,12 +54,15 @@ async function renderSettings(container) {
       <div style="display:flex;flex-direction:column;gap:20px;max-width:480px">
         <div class="card">
           <div style="font-size:13px;font-weight:500;margin-bottom:12px">${t('settings_theme')}</div>
-          <div style="display:flex;gap:8px">
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
             ${['dark','light'].map(th => `
               <button class="btn ${settings.theme === th ? 'btn-primary' : 'btn-secondary'} theme-btn" data-theme="${th}">
                 ${icon(th === 'dark' ? 'eye' : 'eye', '14px')} ${t('settings_theme_' + th)}
               </button>
             `).join('')}
+            <button class="btn btn-secondary" id="open-theme-marketplace" style="margin-left:auto;font-size:12px">
+              ${icon('eye','13px')} Themes Marketplace
+            </button>
           </div>
         </div>
 
@@ -307,7 +310,7 @@ async function renderSettings(container) {
             </div>
             <div>
               <div style="font-size:18px;font-weight:600">Modulo</div>
-              <div style="font-size:12px;color:var(--text-tertiary)">v1.3.2 — Application de productivité modulaire</div>
+              <div style="font-size:12px;color:var(--text-tertiary)">v1.4.7 — Application de productivité modulaire</div>
             </div>
           </div>
           <div style="font-size:13px;color:var(--text-secondary);line-height:1.6">
@@ -353,6 +356,11 @@ async function renderSettings(container) {
   }
 
   function bindEvents() {
+    // Open theme marketplace shortcut
+    container.querySelector('#open-theme-marketplace')?.addEventListener('click', () => {
+      Router.navigate('themes');
+    });
+
     // Theme
     container.querySelectorAll('.theme-btn').forEach(btn => {
       btn.addEventListener('click', async () => {

@@ -6,8 +6,15 @@ window._settings = {};
 async function applySettings(settings) {
   window._settings = settings;
 
-  // Thème
-  document.documentElement.setAttribute('data-theme', settings.theme ?? 'dark');
+  // Thème — appliquer le thème communautaire ou le thème de base
+  const themesData = (await window.modulo.themes.get()) ?? { active: null };
+  const activeTheme = themesData.active;
+  if (activeTheme && activeTheme !== 'dark' && activeTheme !== 'light') {
+    // Thème communautaire : l'attribut data-theme prend le nom du thème
+    document.documentElement.setAttribute('data-theme', activeTheme);
+  } else {
+    document.documentElement.setAttribute('data-theme', settings.theme ?? 'dark');
+  }
 
   // Langue
   setLang(settings.lang ?? 'fr');
@@ -114,6 +121,7 @@ async function bootstrap() {
 
   // 3. Enregistrer les routes fixes
   Router.register('dashboard',  renderDashboard);
+  Router.register('themes',     renderThemes);
   Router.register('marketplace', renderMarketplace);
   Router.register('settings',   renderSettings);
   Router.register('profile',    renderProfile);

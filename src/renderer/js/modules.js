@@ -1,9 +1,8 @@
 // ── Modulo — Modules core ──
 
-// ─── DevLog ─────────────────────────────────────────────────────────────────
-
+//DevLog
 const DevLog = (() => {
-  const MAX = 200;
+  const MAX = 200; 
 
   function _entry(level, msg) {
     const entry = { level, msg, ts: new Date().toISOString() };
@@ -28,8 +27,7 @@ const DevLog = (() => {
 
 window.DevLog = DevLog;
 
-// ─── Modal ──────────────────────────────────────────────────────────────────
-
+// Modal
 const Modal = (() => {
   let _onConfirm = null;
 
@@ -80,8 +78,7 @@ const Modal = (() => {
 
 window.Modal = Modal;
 
-// ─── Sound ──────────────────────────────────────────────────────────────────
-
+// Sound
 const Sound = (() => {
   const SOUNDS = {
     ding:  440,
@@ -115,7 +112,7 @@ const Sound = (() => {
 
 window.Sound = Sound;
 
-// ─── TimerOverlay ────────────────────────────────────────────────────────────
+// TimerOverlay
 
 const TimerOverlay = (() => {
   let _el = null;
@@ -155,7 +152,7 @@ const TimerOverlay = (() => {
 
 window.TimerOverlay = TimerOverlay;
 
-// ─── Utilities (globales) ────────────────────────────────────────────────────
+// Utilities (globales)
 
 window.uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 
@@ -186,7 +183,7 @@ window.stripHtml = (html) => {
   return tmp.textContent ?? tmp.innerText ?? '';
 };
 
-// ─── ModuleLoader ─────────────────────────────────────────────────────────────
+// ModuleLoader
 
 const ModuleLoader = (() => {
   const _loaded = new Set();
@@ -226,11 +223,11 @@ const ModuleLoader = (() => {
 
 window.ModuleLoader = ModuleLoader;
 
-// ─── ModuleManager ────────────────────────────────────────────────────────────
-
+// ModuleManager
 const ModuleManager = (() => {
   let _catalog = [];
 
+  // Install specific module
   async function install(mod) {
     try {
       // Télécharger le JS si pas builtin
@@ -286,6 +283,7 @@ const ModuleManager = (() => {
     }
   }
 
+  // Restore installed modules
   async function restoreInstalled() {
     const data = (await window.modulo.modules.get()) ?? { installed: [] };
     const installed = data.installed ?? [];
@@ -306,6 +304,7 @@ const ModuleManager = (() => {
     }
   }
 
+  // Fetch catalog from URL
   async function fetchCatalog(catalogUrl) {
     const url = `${catalogUrl}/api/modules`;
     const res = await fetch(url);

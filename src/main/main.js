@@ -89,7 +89,7 @@ ipcMain.handle('window:isMaximized', () => mainWindow?.isMaximized() ?? false);
 
 // ─── IPC — Store ────────────────────────────────────────────────────────────
 
-const STORES = ['todos', 'checklists', 'reminders', 'timers', 'events', 'notes', 'settings', 'profile', 'modules', 'devlog'];
+const STORES = ['todos', 'checklists', 'reminders', 'timers', 'events', 'notes', 'settings', 'profile', 'modules', 'devlog', 'themes'];
 
 for (const name of STORES) {
   ipcMain.handle(`${name}:getAll`, () => store.readJson(name));

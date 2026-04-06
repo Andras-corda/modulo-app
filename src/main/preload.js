@@ -27,6 +27,10 @@ contextBridge.exposeInMainWorld('modulo', {
     get:  () => ipcRenderer.invoke('modules:getAll'),
     save: (data) => ipcRenderer.invoke('modules:save', data),
   },
+  themes: {
+    get:  () => ipcRenderer.invoke('themes:getAll'),
+    save: (data) => ipcRenderer.invoke('themes:save', data),
+  },
   devlog: {
     get:  () => ipcRenderer.invoke('devlog:getAll'),
     save: (data) => ipcRenderer.invoke('devlog:save', data),
