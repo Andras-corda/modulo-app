@@ -30,7 +30,7 @@ async function renderMarketplace(container) {
       <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap">
         <input class="input" id="mp-search" placeholder="${t('marketplace_search')}" style="max-width:300px">
         <div style="display:flex;gap:6px" id="mp-filters">
-          ${['all','core','productivity','time'].map(cat => `
+          ${['all','core','productivity','time','fun'].map(cat => `
             <button class="btn btn-secondary btn-sm mp-filter ${cat === 'all' ? 'active-filter' : ''}" data-cat="${cat}">
               ${t('marketplace_' + cat)}
             </button>

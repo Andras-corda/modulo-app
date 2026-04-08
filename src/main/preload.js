@@ -59,6 +59,13 @@ contextBridge.exposeInMainWorld('modulo', {
   openExternal: (url) => ipcRenderer.invoke('openExternal', url),
   config: { get: () => ipcRenderer.invoke('config:get') },
 
+  // ─── Stores dédiés aux modules ──────────────────────────────────────────
+  charts:      storeApi('charts'),
+  clicker:     storeApi('clicker'),
+  diagrams:    storeApi('diagrams'),
+  structograms:storeApi('structograms'),
+  datafiles:   storeApi('datafiles'),
+
   // ─── Window controls ──────────────────────────────────────────────────────
   window: {
     minimize:    () => ipcRenderer.invoke('window:minimize'),
