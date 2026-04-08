@@ -50,36 +50,35 @@ async function renderSettings(container) {
   }
 
   function renderAppearance() {
+    const FONTS = [("'Google Sans', 'Roboto', sans-serif", 'Google Sans'), ("'Segoe UI', sans-serif", 'Segoe UI'), ("'Inter', sans-serif", 'Inter'), ("'Open Sans', sans-serif", 'Open Sans'), ("'Nunito', sans-serif", 'Nunito'), ("'Fira Sans', sans-serif", 'Fira Sans'), ('Georgia, serif', 'Georgia'), ("'Times New Roman', serif", 'Times New Roman'), ("'Comic Sans MS', cursive", 'Comic Sans MS'), ("'Courier New', monospace", 'Courier New')];
+    const curFont = settings.fontFamily ?? FONTS[0][0];
+    const curScale = String(settings.fontScale ?? '1');
+
     return `
-      <div style="display:flex;flex-direction:column;gap:20px;max-width:480px">
+      <div style="display:flex;flex-direction:column;gap:16px;max-width:520px">
+
+        <!-- Thème -->
         <div class="card">
-          <div style="font-size:13px;font-weight:500;margin-bottom:12px">${t('settings_theme')}</div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            ${['dark','light'].map(th => `
-              <button class="btn ${settings.theme === th ? 'btn-primary' : 'btn-secondary'} theme-btn" data-theme="${th}">
-                ${icon(th === 'dark' ? 'eye' : 'eye', '14px')} ${t('settings_theme_' + th)}
-              </button>
-            `).join('')}
+          <div style="font-size:13px;font-weight:500;margin-bottom:10px">${t('settings_theme')}</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <button class="btn ${settings.theme === 'dark'  ? 'btn-primary' : 'btn-secondary'} theme-btn" data-theme="dark">
+              ${icon('eye','13px')} ${t('settings_theme_dark')}
+            </button>
+            <button class="btn ${settings.theme === 'light' ? 'btn-primary' : 'btn-secondary'} theme-btn" data-theme="light">
+              ${icon('eye','13px')} ${t('settings_theme_light')}
+            </button>
             <button class="btn btn-secondary" id="open-theme-marketplace" style="margin-left:auto;font-size:12px">
-              ${icon('eye','13px')} Themes Marketplace
+              ${icon('eye','12px')} Themes Marketplace
             </button>
           </div>
         </div>
 
-        <div class="card">
-          <div style="font-size:13px;font-weight:500;margin-bottom:12px">${t('settings_font_size')}</div>
-          <div style="display:flex;gap:8px">
-            ${[['0.88','small'],['1','normal'],['1.15','large']].map(([val, key]) => `
-              <button class="btn ${String(settings.fontScale) === val ? 'btn-primary' : 'btn-secondary'} font-btn" data-scale="${val}">
-                ${t('settings_font_' + key)}
-              </button>
-            `).join('')}
-          </div>
-        </div>
 
+
+        <!-- Langue -->
         <div class="card">
-          <div style="font-size:13px;font-weight:500;margin-bottom:12px">${t('settings_language')}</div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <div style="font-size:13px;font-weight:500;margin-bottom:10px">${t('settings_language')}</div>
+          <div style="display:flex;gap:7px;flex-wrap:wrap">
             ${[['fr','Français'],['en','English'],['es','Español'],['it','Italiano'],['nl','Nederlands'],['de','Deutsch']].map(([code, label]) => `
               <button class="btn ${settings.lang === code ? 'btn-primary' : 'btn-secondary'} lang-btn" data-lang="${code}" style="font-size:12px">
                 ${label}
@@ -88,8 +87,9 @@ async function renderSettings(container) {
           </div>
         </div>
 
+        <!-- Format date -->
         <div class="card">
-          <div style="font-size:13px;font-weight:500;margin-bottom:12px">${t('settings_date_format')}</div>
+          <div style="font-size:13px;font-weight:500;margin-bottom:10px">${t('settings_date_format')}</div>
           <select class="input" id="date-format-sel" style="max-width:200px">
             <option value="dmy" ${settings.dateFormat==='dmy'?'selected':''}>JJ/MM/AAAA</option>
             <option value="mdy" ${settings.dateFormat==='mdy'?'selected':''}>MM/DD/YYYY</option>
@@ -403,6 +403,9 @@ async function renderSettings(container) {
     container.querySelectorAll('.font-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
         settings.fontScale = parseFloat(btn.dataset.scale);
+        // Appliquer immédiatement sans attendre
+        document.documentElement.style.setProperty('--font-scale', settings.fontScale);
+        document.documentElement.style.fontSize = 'calc(16px * ' + settings.fontScale + ')';
         await saveSettings();
         render();
         bindEvents();

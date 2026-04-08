@@ -23,6 +23,13 @@ async function applySettings(settings, activeThemeOverride) {
   // Font scale
   const scale = settings.fontScale ?? 1;
   document.documentElement.style.setProperty('--font-scale', scale);
+  // Appliquer directement sur html aussi pour Electron
+  document.documentElement.style.fontSize = `calc(16px * ${scale})`;
+
+  // Font family
+  const fontFamily = settings.fontFamily ?? "'Google Sans', 'Roboto', sans-serif";
+  document.documentElement.style.setProperty('--font-sans', fontFamily);
+  document.body.style.fontFamily = fontFamily;
 
   // Titre de la fenêtre
   document.title = 'Modulo';

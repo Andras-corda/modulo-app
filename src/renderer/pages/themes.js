@@ -117,7 +117,7 @@ async function renderThemes(container) {
     const swEl    = banner.querySelector('#active-swatches');
     const modeEl  = banner.querySelector('#active-mode');
     if (nameEl) nameEl.textContent = palette?.name ?? paletteId;
-    if (modeEl) modeEl.textContent = mode === 'dark' ? '🌙 Dark' : '☀️ Light';
+    if (modeEl) modeEl.innerHTML = mode === 'dark' ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg> Dark' : '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex-shrink:0"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg> Light';
     if (swEl)   swEl.innerHTML     = _swatches(preview);
   }
 
@@ -150,8 +150,8 @@ async function renderThemes(container) {
               style="cursor:${installed?'pointer':'default'};border-radius:6px;overflow:hidden;border:1.5px solid ${isActivePalette && activeMode==='dark' ? 'var(--blue)' : 'var(--border)'};transition:border-color .12s">
               <div style="display:flex;height:36px">${_swatches(darkPreview)}</div>
               <div style="padding:3px 6px;font-size:10px;color:var(--text-tertiary);background:var(--bg-elevated);display:flex;align-items:center;gap:4px">
-                🌙 <span>Dark</span>
-                ${isActivePalette && activeMode==='dark' ? '<span style="margin-left:auto;color:var(--blue);font-weight:600">●</span>' : ''}
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg> <span>Dark</span>
+                ${isActivePalette && activeMode==='dark' ? '<svg width="8" height="8" viewBox="0 0 8 8" style="margin-left:auto;flex-shrink:0"><circle cx="4" cy="4" r="4" fill="var(--blue)"/></svg>' : ''}
               </div>
             </div>
             <div class="palette-variant ${isActivePalette && activeMode==='light' ? 'variant-active' : ''}"
@@ -159,8 +159,8 @@ async function renderThemes(container) {
               style="cursor:${installed?'pointer':'default'};border-radius:6px;overflow:hidden;border:1.5px solid ${isActivePalette && activeMode==='light' ? 'var(--blue)' : 'var(--border)'};transition:border-color .12s">
               <div style="display:flex;height:36px">${_swatches(lightPreview)}</div>
               <div style="padding:3px 6px;font-size:10px;color:var(--text-tertiary);background:var(--bg-elevated);display:flex;align-items:center;gap:4px">
-                ☀️ <span>Light</span>
-                ${isActivePalette && activeMode==='light' ? '<span style="margin-left:auto;color:var(--blue);font-weight:600">●</span>' : ''}
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex-shrink:0"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg> <span>Light</span>
+                ${isActivePalette && activeMode==='light' ? '<svg width="8" height="8" viewBox="0 0 8 8" style="margin-left:auto;flex-shrink:0"><circle cx="4" cy="4" r="4" fill="var(--blue)"/></svg>' : ''}
               </div>
             </div>
           </div>
@@ -183,11 +183,11 @@ async function renderThemes(container) {
             ${installed ? `
               <button class="btn btn-secondary btn-sm themes-apply-dark" data-id="${palette.id}"
                 style="flex:1;font-size:11px;${isActivePalette && activeMode==='dark' ? 'opacity:.4;cursor:default' : ''}">
-                🌙 ${_l('Sombre','Dark')}
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg> ${_l('Sombre','Dark')}
               </button>
               <button class="btn btn-secondary btn-sm themes-apply-light" data-id="${palette.id}"
                 style="flex:1;font-size:11px;${isActivePalette && activeMode==='light' ? 'opacity:.4;cursor:default' : ''}">
-                ☀️ ${_l('Clair','Light')}
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex-shrink:0"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg> ${_l('Clair','Light')}
               </button>
               ${!palette.builtin ? `
                 <button class="btn btn-ghost btn-sm themes-remove" data-id="${palette.id}"
