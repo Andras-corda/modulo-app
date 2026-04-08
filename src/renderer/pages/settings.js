@@ -79,9 +79,9 @@ async function renderSettings(container) {
 
         <div class="card">
           <div style="font-size:13px;font-weight:500;margin-bottom:12px">${t('settings_language')}</div>
-          <div style="display:flex;gap:8px">
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
             ${[['fr','Français'],['en','English'],['es','Español'],['it','Italiano'],['nl','Nederlands'],['de','Deutsch']].map(([code, label]) => `
-              <button class="btn ${settings.lang === code ? 'btn-primary' : 'btn-secondary'} lang-btn" data-lang="${code}">
+              <button class="btn ${settings.lang === code ? 'btn-primary' : 'btn-secondary'} lang-btn" data-lang="${code}" style="font-size:12px">
                 ${label}
               </button>
             `).join('')}
@@ -302,7 +302,7 @@ async function renderSettings(container) {
     const buildCfg = cfg.build   ?? {};
 
     const name     = appCfg.name        ?? 'Modulo';
-    const ver      = appCfg.version     ?? '1.4.8';
+    const ver      = appCfg.version     ?? '1.5.1';
     const desc     = appCfg.description ?? 'Modular productivity app. 100% local data, no account required.';
     const license  = appCfg.license     ?? 'MIT';
     const cName    = creator.name       ?? 'R3tr0___';
@@ -312,19 +312,14 @@ async function renderSettings(container) {
     const repoUrl  = links.repo         ?? '';
     const iconPath = buildCfg.icon_png  ?? null;
 
-    // Icône : image réelle depuis assets/icons, sinon fallback SVG
-    let iconEl;
-    if (iconPath) {
-      iconEl = '<img src="' + iconPath + '" width="52" height="52" style="border-radius:12px;flex-shrink:0;image-rendering:crisp-edges">';
-    } else {
-      iconEl = '<div style="width:52px;height:52px;border-radius:12px;background:var(--bg-elevated);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0">'
-             + '<svg width="28" height="28" viewBox="0 0 20 20" fill="none">'
-             + '<rect x="2" y="2" width="7" height="7" rx="2" fill="#4285F4"/>'
-             + '<rect x="11" y="2" width="7" height="7" rx="2" fill="#4285F4" opacity=".6"/>'
-             + '<rect x="2" y="11" width="7" height="7" rx="2" fill="#4285F4" opacity=".6"/>'
-             + '<rect x="11" y="11" width="7" height="7" rx="2" fill="#4285F4" opacity=".3"/>'
-             + '</svg></div>';
-    }
+    // Icône : SVG logo Modulo (les chemins relatifs ne fonctionnent pas dans Electron file://)
+    const iconEl = '<div style="width:52px;height:52px;border-radius:12px;background:var(--bg-elevated);border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;flex-shrink:0">'
+      + '<svg width="32" height="32" viewBox="0 0 20 20" fill="none">'
+      + '<rect x="2" y="2" width="7" height="7" rx="2" fill="#4285F4"/>'
+      + '<rect x="11" y="2" width="7" height="7" rx="2" fill="#4285F4" opacity=".6"/>'
+      + '<rect x="2" y="11" width="7" height="7" rx="2" fill="#4285F4" opacity=".6"/>'
+      + '<rect x="11" y="11" width="7" height="7" rx="2" fill="#4285F4" opacity=".3"/>'
+      + '</svg></div>';
 
     const discordBtn = cDiscord
       ? '<button class="btn btn-secondary btn-sm about-ext" data-url="' + cDiscord + '" style="gap:7px">'

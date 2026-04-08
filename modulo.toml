@@ -4,7 +4,7 @@
 
 [app]
 name        = "Modulo"
-version     = "1.4.8"
+version     = "1.5.1"
 description = "A modular desktop productivity app. Install only what you need. 100% local data, no account required."
 license     = "MIT"
 language    = "fr"
@@ -32,6 +32,6 @@ api_download= "https://modulo-web-production.up.railway.app/api/downloads"
 [build]
 electron  = "28"
 platform  = "Windows"
-installer = "Modulo.Setup.1.4.8.exe"
+installer = "Modulo.Setup.1.5.1.exe"
 icon_ico  = "assets/icons/icon.ico"
 icon_png  = "assets/icons/icon.png"

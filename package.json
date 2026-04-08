@@ -1,6 +1,6 @@
 {
   "name": "modulo",
-  "version": "1.4.8",
+  "version": "1.5.1",
   "description": "Application de productivit\u00e9 desktop modulaire",
   "author": "Modulo Team",
   "main": "src/main/main.js",
