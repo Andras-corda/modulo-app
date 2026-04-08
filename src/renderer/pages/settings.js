@@ -80,7 +80,7 @@ async function renderSettings(container) {
         <div class="card">
           <div style="font-size:13px;font-weight:500;margin-bottom:12px">${t('settings_language')}</div>
           <div style="display:flex;gap:8px">
-            ${[['fr','Français'],['en','English']].map(([code, label]) => `
+            ${[['fr','Français'],['en','English'],['es','Español'],['it','Italiano'],['nl','Nederlands'],['de','Deutsch']].map(([code, label]) => `
               <button class="btn ${settings.lang === code ? 'btn-primary' : 'btn-secondary'} lang-btn" data-lang="${code}">
                 ${label}
               </button>
