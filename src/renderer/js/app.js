@@ -3,18 +3,19 @@
 // Exposé globalement pour que les modules puissent l'appeler
 window._settings = {};
 
-async function applySettings(settings) {
+async function applySettings(settings, activeThemeOverride) {
   window._settings = settings;
 
-  // Thème — appliquer le thème communautaire ou le thème de base
-  const themesData = (await window.modulo.themes.get()) ?? { active: null };
-  const activeTheme = themesData.active;
-  if (activeTheme && activeTheme !== 'dark' && activeTheme !== 'light') {
-    // Thème communautaire : l'attribut data-theme prend le nom du thème
-    document.documentElement.setAttribute('data-theme', activeTheme);
+  // Thème — si un override est fourni (ex: depuis themes.js) on l'utilise directement
+  // Sinon on lit le store themes pour avoir la valeur à jour
+  let activeTheme;
+  if (activeThemeOverride !== undefined) {
+    activeTheme = activeThemeOverride;
   } else {
-    document.documentElement.setAttribute('data-theme', settings.theme ?? 'dark');
+    const themesData = (await window.modulo.themes.get()) ?? {};
+    activeTheme = themesData.active ?? settings.theme ?? 'dark';
   }
+  document.documentElement.setAttribute('data-theme', activeTheme);
 
   // Langue
   setLang(settings.lang ?? 'fr');
@@ -112,9 +113,24 @@ function initReminders() {
 // ─── Bootstrap ───────────────────────────────────────────────────────────────
 
 async function bootstrap() {
-  // 1. Charger les paramètres
-  const settings = (await window.modulo.settings.get()) ?? {};
-  await applySettings(settings);
+  // 0. Appliquer le thème en PREMIER pour éviter le flash (FOUC)
+  //    On lit settings + themes en parallèle avant tout rendu
+  const [settings, themesData] = await Promise.all([
+    window.modulo.settings.get().then(s => s ?? {}),
+    window.modulo.themes.get().then(t => t ?? { active: null }),
+  ]);
+
+  // Charger la config TOML (modulo.toml) et la mettre en cache global
+  try {
+    window._appConfig = await window.modulo.config.get();
+  } catch { window._appConfig = {}; }
+
+  // Appliquer le thème immédiatement avant tout rendu
+  const savedTheme = themesData.active ?? settings.theme ?? 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+
+  // 1. Appliquer le reste des settings (font, lang, etc.)
+  await applySettings(settings, savedTheme);
 
   // 2. Initialiser le router
   Router.init(document.getElementById('app-content'));
@@ -134,7 +150,8 @@ async function bootstrap() {
   initReminders();
 
   // 5. Restaurer les modules installés
-  const catalogUrl = settings.catalogUrl ?? 'https://modulo-web-production.up.railway.app';
+  const cfg = window._appConfig ?? {};
+  const catalogUrl = settings.catalogUrl ?? cfg.server?.base_url ?? 'https://modulo-web-production.up.railway.app';
   try {
     const catalog = await ModuleManager.fetchCatalog(catalogUrl);
     ModuleManager.setCatalog(catalog);

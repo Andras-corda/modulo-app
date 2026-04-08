@@ -12,6 +12,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&family=Roboto:wght@400;500&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
 
+  <!-- Anti-FOUC : appliquer le thème avant le premier paint -->
+  <script>
+    // Lire le thème depuis le store Electron de façon synchrone si possible
+    // Sinon garder dark par défaut — sera corrigé par bootstrap()
+    try {
+      const raw = window.__MODULO_THEME__;
+      if (raw) document.documentElement.setAttribute('data-theme', raw);
+    } catch(e) {}
+  </script>
+
   <!-- CSS -->
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/reset.css">
@@ -33,7 +43,7 @@
       <span>Modulo</span>
     </div>
 
-    <div id="titlebar-title">v1.4.7</div>
+    <div id="titlebar-title">v1.4.8</div>
 
     <div id="window-controls">
       <button class="wc-btn" id="btn-minimize" title="Réduire">

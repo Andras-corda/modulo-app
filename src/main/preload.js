@@ -57,6 +57,7 @@ contextBridge.exposeInMainWorld('modulo', {
   notify:       ({ title, body }) => ipcRenderer.invoke('notify', { title, body }),
   setStartup:   (enable) => ipcRenderer.invoke('setStartup', enable),
   openExternal: (url) => ipcRenderer.invoke('openExternal', url),
+  config: { get: () => ipcRenderer.invoke('config:get') },
 
   // ─── Window controls ──────────────────────────────────────────────────────
   window: {

@@ -1,3 +1,4 @@
+const config = require('./config');
 const { app, BrowserWindow, ipcMain, Tray, Menu, nativeImage, Notification, shell } = require('electron');
 const path = require('path');
 const https = require('https');
@@ -28,7 +29,19 @@ function createWindow() {
       sandbox: false,
       webSecurity: false, // Permet fetch() vers Railway depuis file://
     },
-    icon: path.join(__dirname, '../../assets/icons/icon.png'),
+    icon: path.join(__dirname, '../../', config.build?.icon_png ?? 'assets/icons/icon.png'),
+  });
+
+  // Injecter le thème avant le premier paint (anti-FOUC)
+  mainWindow.webContents.on('dom-ready', async () => {
+    try {
+      const settings   = store.readJson('settings') ?? {};
+      const themesData = store.readJson('themes')   ?? {};
+      const theme = themesData.active ?? settings.theme ?? 'dark';
+      await mainWindow.webContents.executeJavaScript(
+        `document.documentElement.setAttribute('data-theme',${JSON.stringify(theme)});window.__MODULO_THEME__=${JSON.stringify(theme)};`
+      );
+    } catch (_e) { /* ignore */ }
   });
 
   mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
@@ -160,3 +173,4 @@ ipcMain.handle('setStartup', (_, enable) => {
 // ─── IPC — Shell ────────────────────────────────────────────────────────────
 
 ipcMain.handle('openExternal', (_, url) => shell.openExternal(url));
+ipcMain.handle('config:get', () => config);

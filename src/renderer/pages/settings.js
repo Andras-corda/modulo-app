@@ -295,66 +295,99 @@ async function renderSettings(container) {
   }
 
   function renderAbout() {
-    return `
-      <div style="max-width:480px;display:flex;flex-direction:column;gap:20px">
+    const cfg      = window._appConfig ?? {};
+    const appCfg   = cfg.app     ?? {};
+    const creator  = cfg.creator ?? {};
+    const links    = cfg.links   ?? {};
+    const buildCfg = cfg.build   ?? {};
 
-        <div class="card" style="background:linear-gradient(135deg,rgba(66,133,244,.06) 0%,transparent 100%)">
-          <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
-            <div style="width:52px;height:52px;border-radius:12px;background:var(--blue);display:flex;align-items:center;justify-content:center">
-              <svg width="28" height="28" viewBox="0 0 20 20" fill="none">
-                <rect x="2" y="2" width="7" height="7" rx="2" fill="#fff"/>
-                <rect x="11" y="2" width="7" height="7" rx="2" fill="#fff" opacity=".6"/>
-                <rect x="2" y="11" width="7" height="7" rx="2" fill="#fff" opacity=".6"/>
-                <rect x="11" y="11" width="7" height="7" rx="2" fill="#fff" opacity=".3"/>
-              </svg>
-            </div>
-            <div>
-              <div style="font-size:18px;font-weight:600">Modulo</div>
-              <div style="font-size:12px;color:var(--text-tertiary)">v1.4.7 — Application de productivité modulaire</div>
-            </div>
-          </div>
-          <div style="font-size:13px;color:var(--text-secondary);line-height:1.6">
-            Modulo est une application desktop open-source permettant d'installer uniquement les fonctionnalités dont vous avez besoin. Données 100% locales, aucun compte requis.
-          </div>
-        </div>
+    const name     = appCfg.name        ?? 'Modulo';
+    const ver      = appCfg.version     ?? '1.4.8';
+    const desc     = appCfg.description ?? 'Modular productivity app. 100% local data, no account required.';
+    const license  = appCfg.license     ?? 'MIT';
+    const cName    = creator.name       ?? 'R3tr0___';
+    const cRole    = creator.role       ?? 'Developer';
+    const cDiscord = creator.discord    ?? '';
+    const cPortfol = creator.portfolio  ?? '';
+    const repoUrl  = links.repo         ?? '';
+    const iconPath = buildCfg.icon_png  ?? null;
 
-        <div class="card">
-          <div style="font-size:13px;font-weight:500;margin-bottom:14px">Créateur</div>
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-            <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#4285F4,#9C27B0);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff">R</div>
-            <div>
-              <div style="font-size:14px;font-weight:600">R3tr0___</div>
-              <div style="font-size:11px;color:var(--text-tertiary)">Développeur</div>
-            </div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <button class="btn btn-secondary about-ext" data-url="https://discord.gg/8JPP3wDd6e" style="justify-content:flex-start;gap:10px">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#5865F2;flex-shrink:0"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
-              <span>Discord — Rejoindre le serveur</span>
-            </button>
-            <button class="btn btn-secondary about-ext" data-url="https://andras-corda.github.io/portfolio-github-hosting/" style="justify-content:flex-start;gap:10px">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-              <span>Portfolio</span>
-            </button>
-            <button class="btn btn-secondary about-ext" data-url="https://github.com/Andras-corda/modulo-app" style="justify-content:flex-start;gap:10px">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;color:var(--text-secondary)"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              <span>GitHub — Code source</span>
-            </button>
-          </div>
-        </div>
+    // Icône : image réelle depuis assets/icons, sinon fallback SVG
+    let iconEl;
+    if (iconPath) {
+      iconEl = '<img src="' + iconPath + '" width="52" height="52" style="border-radius:12px;flex-shrink:0;image-rendering:crisp-edges">';
+    } else {
+      iconEl = '<div style="width:52px;height:52px;border-radius:12px;background:var(--bg-elevated);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0">'
+             + '<svg width="28" height="28" viewBox="0 0 20 20" fill="none">'
+             + '<rect x="2" y="2" width="7" height="7" rx="2" fill="#4285F4"/>'
+             + '<rect x="11" y="2" width="7" height="7" rx="2" fill="#4285F4" opacity=".6"/>'
+             + '<rect x="2" y="11" width="7" height="7" rx="2" fill="#4285F4" opacity=".6"/>'
+             + '<rect x="11" y="11" width="7" height="7" rx="2" fill="#4285F4" opacity=".3"/>'
+             + '</svg></div>';
+    }
 
-        <div class="card">
-          <div style="font-size:13px;font-weight:500;margin-bottom:8px">Licence</div>
-          <div style="font-size:12px;color:var(--text-tertiary);line-height:1.6">
-            MIT License — Logiciel libre et open source.<br>
-            Vos données vous appartiennent et ne quittent jamais votre machine.
-          </div>
-        </div>
+    const discordBtn = cDiscord
+      ? '<button class="btn btn-secondary btn-sm about-ext" data-url="' + cDiscord + '" style="gap:7px">'
+        + '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color:#5865F2;flex-shrink:0"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>'
+        + 'Discord</button>'
+      : '';
 
-      </div>
-    `;
+    const portfolioBtn = cPortfol
+      ? '<button class="btn btn-secondary btn-sm about-ext" data-url="' + cPortfol + '" style="gap:7px">'
+        + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'
+        + 'Portfolio</button>'
+      : '';
+
+    const githubBtn = repoUrl
+      ? '<button class="btn btn-secondary btn-sm about-ext" data-url="' + repoUrl + '" style="gap:7px">'
+        + '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;color:var(--text-secondary)"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>'
+        + 'GitHub</button>'
+      : '';
+
+    const buildRows = [
+      ['Platform',  buildCfg.platform  ?? 'Windows'],
+      ['Electron',  'v' + (buildCfg.electron ?? '28')],
+      ['License',   license],
+      ['Installer', buildCfg.installer ?? '—'],
+    ].map(function(pair) {
+      return '<div style="background:var(--bg-elevated);border-radius:var(--radius-md);padding:8px 10px">'
+           + '<div style="font-size:9px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.5px">' + pair[0] + '</div>'
+           + '<div style="font-size:11px;font-weight:500;margin-top:2px;font-family:var(--font-mono)">' + pair[1] + '</div>'
+           + '</div>';
+    }).join('');
+
+    return '<div style="max-width:520px;display:flex;flex-direction:column;gap:14px">'
+
+      + '<div class="card" style="background:linear-gradient(135deg,rgba(66,133,244,.07) 0%,transparent 100%);padding:20px">'
+        + '<div style="display:flex;align-items:center;gap:14px">'
+          + iconEl
+          + '<div style="min-width:0">'
+            + '<div style="font-size:20px;font-weight:700;letter-spacing:-.5px">' + name + '</div>'
+            + '<div style="font-size:11px;color:var(--text-tertiary);margin-top:3px">v' + ver + ' · ' + license + ' License</div>'
+            + '<div style="font-size:12px;color:var(--text-secondary);margin-top:6px;line-height:1.5">' + desc + '</div>'
+          + '</div>'
+        + '</div>'
+      + '</div>'
+
+      + '<div class="card" style="padding:18px">'
+        + '<div style="font-size:10px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:12px">Creator</div>'
+        + '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">'
+          + '<div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#4285F4,#9C27B0);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;flex-shrink:0">' + cName.charAt(0).toUpperCase() + '</div>'
+          + '<div>'
+            + '<div style="font-size:14px;font-weight:600">' + cName + '</div>'
+            + '<div style="font-size:11px;color:var(--text-tertiary)">' + cRole + '</div>'
+          + '</div>'
+        + '</div>'
+        + '<div style="display:flex;gap:7px;flex-wrap:wrap">' + discordBtn + portfolioBtn + githubBtn + '</div>'
+      + '</div>'
+
+      + '<div class="card" style="padding:18px">'
+        + '<div style="font-size:10px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:10px">Build info</div>'
+        + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">' + buildRows + '</div>'
+      + '</div>'
+
+    + '</div>';
   }
-
   function bindEvents() {
     // Open theme marketplace shortcut
     container.querySelector('#open-theme-marketplace')?.addEventListener('click', () => {
@@ -365,7 +398,7 @@ async function renderSettings(container) {
     container.querySelectorAll('.theme-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
         settings.theme = btn.dataset.theme;
-        await saveSettings();
+        await saveSettings(btn.dataset.theme);
         render();
         bindEvents();
       });
@@ -455,9 +488,25 @@ async function renderSettings(container) {
     if (activeTab === 'modules') loadModulesTab();
   }
 
-  async function saveSettings() {
+  async function saveSettings(themeOverride) {
     await window.modulo.settings.save(settings);
-    await applySettings(settings);
+
+    // Si on change dark/light depuis Settings, mettre à jour themes.active aussi
+    if (themeOverride !== undefined) {
+      const td = (await window.modulo.themes.get()) ?? { installed: [], active: null };
+      // Ne réinitialiser active que si c'est un thème default (dark/light)
+      // ou si le thème actif correspond déjà à la famille default
+      const currentActive = td.active ?? '';
+      const isDefault = !currentActive || currentActive === 'dark' || currentActive === 'light'
+                     || currentActive.startsWith('default-');
+      if (isDefault) {
+        td.active = themeOverride;
+        await window.modulo.themes.save(td);
+      }
+      await applySettings(settings, themeOverride);
+    } else {
+      await applySettings(settings);
+    }
   }
 
   const styleEl = document.createElement('style');

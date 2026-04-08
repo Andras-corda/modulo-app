@@ -64,7 +64,8 @@ async function renderThemes(container) {
     // Sync settings.theme pour les thèmes built-in
     const ns = { ...settings, theme: mode };
     await window.modulo.settings.save(ns);
-    await window.applySettings(ns);
+    // Passer themeId directement pour éviter un themes.get() qui lirait l'ancienne valeur
+    await window.applySettings(ns, themeId);
 
     _themesData.active = themeId;
     await window.modulo.themes.save(_themesData);

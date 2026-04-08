@@ -1,7 +1,7 @@
 {
   "name": "modulo",
-  "version": "1.4.7",
-  "description": "Application de productivité desktop modulaire",
+  "version": "1.4.8",
+  "description": "Application de productivit\u00e9 desktop modulaire",
   "author": "Modulo Team",
   "main": "src/main/main.js",
   "scripts": {
@@ -21,9 +21,8 @@
       "output": "dist"
     },
     "win": {
-      "icon": "assets/icons/icon.ico",
-      "publisherName": "Andras Corda",
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "assets/icons/icon.ico"
     }
   }
 }
