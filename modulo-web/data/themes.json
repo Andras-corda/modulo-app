@@ -1,0 +1,561 @@
+[
+  {
+    "id": "default",
+    "name": "Default",
+    "author": "Modulo Team",
+    "builtin": true,
+    "palette": {
+      "accent": "#4285F4",
+      "accent2": "#34A853"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#0f1117",
+          "#161b27",
+          "#4285F4",
+          "#e8eaf0",
+          "#34A853"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#f5f0e8",
+          "#ede8df",
+          "#4285F4",
+          "#1a1f2e",
+          "#34A853"
+        ]
+      }
+    },
+    "tags": [
+      "official"
+    ],
+    "downloads": 0
+  },
+  {
+    "id": "nord",
+    "name": "Nord",
+    "author": "Modulo Team",
+    "builtin": false,
+    "palette": {
+      "accent": "#88C0D0",
+      "accent2": "#A3BE8C"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#2E3440",
+          "#3B4252",
+          "#88C0D0",
+          "#ECEFF4",
+          "#A3BE8C"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#ECEFF4",
+          "#E5E9F0",
+          "#5E81AC",
+          "#2E3440",
+          "#A3BE8C"
+        ]
+      }
+    },
+    "tags": [
+      "minimal",
+      "blue"
+    ],
+    "downloads": 0
+  },
+  {
+    "id": "dracula",
+    "name": "Dracula",
+    "author": "Modulo Team",
+    "builtin": false,
+    "palette": {
+      "accent": "#bd93f9",
+      "accent2": "#50fa7b"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#282a36",
+          "#44475a",
+          "#bd93f9",
+          "#f8f8f2",
+          "#50fa7b"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#f8f8f2",
+          "#e8e8ec",
+          "#6272a4",
+          "#282a36",
+          "#50fa7b"
+        ]
+      }
+    },
+    "tags": [
+      "purple",
+      "vibrant"
+    ],
+    "downloads": 0
+  },
+  {
+    "id": "catppuccin",
+    "name": "Catppuccin",
+    "author": "Modulo Team",
+    "builtin": false,
+    "palette": {
+      "accent": "#cba6f7",
+      "accent2": "#a6e3a1"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#1e1e2e",
+          "#313244",
+          "#cba6f7",
+          "#cdd6f4",
+          "#a6e3a1"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#eff1f5",
+          "#e6e9ef",
+          "#8839ef",
+          "#4c4f69",
+          "#40a02b"
+        ]
+      }
+    },
+    "tags": [
+      "pastel",
+      "warm"
+    ],
+    "downloads": 0
+  },
+  {
+    "id": "gruvbox",
+    "name": "Gruvbox",
+    "author": "Modulo Team",
+    "builtin": false,
+    "palette": {
+      "accent": "#fabd2f",
+      "accent2": "#b8bb26"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#282828",
+          "#3c3836",
+          "#fabd2f",
+          "#ebdbb2",
+          "#b8bb26"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#fbf1c7",
+          "#f2e5bc",
+          "#d79921",
+          "#3c3836",
+          "#98971a"
+        ]
+      }
+    },
+    "tags": [
+      "retro",
+      "warm"
+    ],
+    "downloads": 0
+  },
+  {
+    "id": "tokyonight",
+    "name": "Tokyo Night",
+    "author": "Modulo Team",
+    "builtin": false,
+    "palette": {
+      "accent": "#7aa2f7",
+      "accent2": "#9ece6a"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#1a1b2e",
+          "#24283b",
+          "#7aa2f7",
+          "#c0caf5",
+          "#9ece6a"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#e1e2e7",
+          "#d0d5e3",
+          "#2e7de9",
+          "#3760bf",
+          "#587539"
+        ]
+      }
+    },
+    "tags": [
+      "blue",
+      "neon"
+    ],
+    "downloads": 0
+  },
+  {
+    "id": "onedark",
+    "name": "One Dark",
+    "author": "Modulo Team",
+    "builtin": false,
+    "palette": {
+      "accent": "#61afef",
+      "accent2": "#98c379"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#282c34",
+          "#2c313c",
+          "#61afef",
+          "#abb2bf",
+          "#98c379"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#fafafa",
+          "#e5e5e6",
+          "#4078f2",
+          "#383a42",
+          "#50a14f"
+        ]
+      }
+    },
+    "tags": [
+      "classic",
+      "green"
+    ],
+    "downloads": 0
+  },
+  {
+    "id": "solarized",
+    "name": "Solarized",
+    "author": "Modulo Team",
+    "builtin": false,
+    "palette": {
+      "accent": "#268bd2",
+      "accent2": "#2aa198"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#002b36",
+          "#073642",
+          "#268bd2",
+          "#fdf6e3",
+          "#2aa198"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#fdf6e3",
+          "#eee8d5",
+          "#268bd2",
+          "#657b83",
+          "#859900"
+        ]
+      }
+    },
+    "tags": [
+      "teal",
+      "legendary"
+    ],
+    "downloads": 0
+  },
+  {
+    "id": "rose-pine",
+    "name": "Rosé Pine",
+    "author": "Modulo Team",
+    "builtin": false,
+    "palette": {
+      "accent": "#c4a7e7",
+      "accent2": "#9ccfd8"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#191724",
+          "#26233a",
+          "#c4a7e7",
+          "#e0def4",
+          "#9ccfd8"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#faf4ed",
+          "#fffaf3",
+          "#907aa9",
+          "#575279",
+          "#d7827e"
+        ]
+      }
+    },
+    "tags": [
+      "purple",
+      "elegant"
+    ],
+    "downloads": 0
+  },
+  {
+    "id": "monokai",
+    "name": "Monokai",
+    "author": "Modulo Team",
+    "builtin": false,
+    "palette": {
+      "accent": "#f92672",
+      "accent2": "#a6e22e"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#272822",
+          "#383830",
+          "#f92672",
+          "#f8f8f2",
+          "#a6e22e"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#fafafa",
+          "#e8e8e8",
+          "#f92672",
+          "#272822",
+          "#a6e22e"
+        ]
+      }
+    },
+    "tags": [
+      "classic",
+      "vibrant"
+    ],
+    "downloads": 0
+  },
+  {
+    "id": "everforest",
+    "name": "Everforest",
+    "author": "Modulo Team",
+    "builtin": false,
+    "palette": {
+      "accent": "#a7c080",
+      "accent2": "#7fbbb3"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#2d353b",
+          "#3d484d",
+          "#a7c080",
+          "#d3c6aa",
+          "#7fbbb3"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#fdf6e3",
+          "#f3ead3",
+          "#8da101",
+          "#5c6a72",
+          "#35a77c"
+        ]
+      }
+    },
+    "tags": [
+      "green",
+      "nature"
+    ],
+    "downloads": 0
+  },
+  {
+    "id": "kanagawa",
+    "name": "Kanagawa",
+    "author": "Modulo Team",
+    "builtin": false,
+    "palette": {
+      "accent": "#7e9cd8",
+      "accent2": "#98bb6c"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#1f1f28",
+          "#2a2a37",
+          "#7e9cd8",
+          "#dcd7ba",
+          "#98bb6c"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#f2ecbc",
+          "#e7dba0",
+          "#4e8ca2",
+          "#545464",
+          "#6f894e"
+        ]
+      }
+    },
+    "tags": [
+      "blue",
+      "japanese"
+    ],
+    "downloads": 0
+  },
+  {
+    "id": "midnight",
+    "name": "Midnight",
+    "author": "Modulo Team",
+    "builtin": false,
+    "palette": {
+      "accent": "#a78bfa",
+      "accent2": "#34d399"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#0f0a1e",
+          "#1e1535",
+          "#a78bfa",
+          "#ede9fe",
+          "#34d399"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#f5f3ff",
+          "#ede9fe",
+          "#7c3aed",
+          "#1e1535",
+          "#059669"
+        ]
+      }
+    },
+    "tags": [
+      "purple",
+      "unique"
+    ],
+    "downloads": 0
+  },
+  {
+    "id": "github",
+    "name": "GitHub",
+    "author": "Modulo Team",
+    "builtin": false,
+    "palette": {
+      "accent": "#58a6ff",
+      "accent2": "#3fb950"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#0d1117",
+          "#161b22",
+          "#58a6ff",
+          "#c9d1d9",
+          "#3fb950"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#ffffff",
+          "#f6f8fa",
+          "#0969da",
+          "#24292f",
+          "#1a7f37"
+        ]
+      }
+    },
+    "tags": [
+      "minimal",
+      "github"
+    ],
+    "downloads": 0
+  },
+  {
+    "id": "material",
+    "name": "Material",
+    "author": "Modulo Team",
+    "builtin": false,
+    "palette": {
+      "accent": "#89ddff",
+      "accent2": "#c3e88d"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#212121",
+          "#2e2e2e",
+          "#89ddff",
+          "#eeffff",
+          "#c3e88d"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#fafafa",
+          "#f5f5f5",
+          "#39adb5",
+          "#546e7a",
+          "#91b859"
+        ]
+      }
+    },
+    "tags": [
+      "material",
+      "google"
+    ],
+    "downloads": 0
+  },
+  {
+    "id": "ayu",
+    "name": "Ayu",
+    "author": "Modulo Team",
+    "builtin": false,
+    "palette": {
+      "accent": "#39bae6",
+      "accent2": "#7fd962"
+    },
+    "variants": {
+      "dark": {
+        "preview": [
+          "#0a0e14",
+          "#141b24",
+          "#39bae6",
+          "#bfbdb6",
+          "#7fd962"
+        ]
+      },
+      "light": {
+        "preview": [
+          "#f8f9fa",
+          "#f3f4f5",
+          "#399ee6",
+          "#5c6166",
+          "#86b300"
+        ]
+      }
+    },
+    "tags": [
+      "minimal",
+      "clean"
+    ],
+    "downloads": 0
+  }
+]

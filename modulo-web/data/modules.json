@@ -1,0 +1,573 @@
+[
+  {
+    "id": "todos",
+    "name": "T\u00e2ches",
+    "description": "G\u00e9rez vos t\u00e2ches avec priorit\u00e9s, dates d'\u00e9ch\u00e9ance et filtres.",
+    "version": "1.2.0",
+    "author": "Modulo Team",
+    "icon": "check",
+    "color": "#4285F4",
+    "category": "productivity",
+    "tags": [
+      "t\u00e2ches",
+      "todo",
+      "productivit\u00e9"
+    ],
+    "navKey": "todos",
+    "navIcon": "check",
+    "navLabel": {
+      "fr": "T\u00e2ches",
+      "en": "Tasks"
+    },
+    "renderFn": "renderTodos",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/todos.js",
+    "size": "8 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.2.0",
+        "date": "2025-01-15",
+        "notes": "Ajout des priorit\u00e9s et filtres avanc\u00e9s"
+      },
+      {
+        "version": "1.0.0",
+        "date": "2024-11-01",
+        "notes": "Version initiale"
+      }
+    ]
+  },
+  {
+    "id": "notes",
+    "name": "Notes",
+    "description": "Prenez des notes enrichies avec tags, dossiers et protection par mot de passe.",
+    "version": "1.3.0",
+    "author": "Modulo Team",
+    "icon": "note",
+    "color": "#F4B400",
+    "category": "productivity",
+    "tags": [
+      "notes",
+      "texte",
+      "riche"
+    ],
+    "navKey": "notes",
+    "navIcon": "note",
+    "navLabel": {
+      "fr": "Notes",
+      "en": "Notes"
+    },
+    "renderFn": "renderNotes",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/notes.js",
+    "size": "25 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.3.0",
+        "date": "2025-02-01",
+        "notes": "Notes s\u00e9curis\u00e9es par mot de passe"
+      },
+      {
+        "version": "1.0.0",
+        "date": "2024-11-01",
+        "notes": "Version initiale"
+      }
+    ]
+  },
+  {
+    "id": "checklists",
+    "name": "Listes",
+    "description": "Cr\u00e9ez des listes \u00e0 cocher r\u00e9utilisables pour vos routines et processus.",
+    "version": "1.1.0",
+    "author": "Modulo Team",
+    "icon": "list",
+    "color": "#34A853",
+    "category": "productivity",
+    "tags": [
+      "liste",
+      "checklist",
+      "routine"
+    ],
+    "navKey": "checklists",
+    "navIcon": "list",
+    "navLabel": {
+      "fr": "Listes",
+      "en": "Checklists"
+    },
+    "renderFn": "renderChecklists",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/checklists.js",
+    "size": "8 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.1.0",
+        "date": "2025-01-10",
+        "notes": "Import/export et r\u00e9organisation"
+      },
+      {
+        "version": "1.0.0",
+        "date": "2024-11-01",
+        "notes": "Version initiale"
+      }
+    ]
+  },
+  {
+    "id": "timers",
+    "name": "Minuteurs",
+    "description": "Minuteurs Pomodoro et personnalis\u00e9s avec overlay discret en coin d'\u00e9cran.",
+    "version": "1.2.0",
+    "author": "Modulo Team",
+    "icon": "timer",
+    "color": "#EA4335",
+    "category": "productivity",
+    "tags": [
+      "minuteur",
+      "pomodoro",
+      "temps"
+    ],
+    "navKey": "timers",
+    "navIcon": "timer",
+    "navLabel": {
+      "fr": "Minuteurs",
+      "en": "Timers"
+    },
+    "renderFn": "renderTimers",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/timers.js",
+    "size": "8 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.2.0",
+        "date": "2025-02-10",
+        "notes": "Overlay pills style Discord"
+      },
+      {
+        "version": "1.0.0",
+        "date": "2024-11-01",
+        "notes": "Version initiale"
+      }
+    ]
+  },
+  {
+    "id": "reminders",
+    "name": "Rappels",
+    "description": "Planifiez des rappels ponctuels ou r\u00e9currents avec notifications syst\u00e8me.",
+    "version": "1.1.0",
+    "author": "Modulo Team",
+    "icon": "bell",
+    "color": "#FF6D00",
+    "category": "productivity",
+    "tags": [
+      "rappel",
+      "notification",
+      "alarme"
+    ],
+    "navKey": "reminders",
+    "navIcon": "bell",
+    "navLabel": {
+      "fr": "Rappels",
+      "en": "Reminders"
+    },
+    "renderFn": "renderReminders",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/reminders.js",
+    "size": "7 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.1.0",
+        "date": "2025-01-20",
+        "notes": "Rappels r\u00e9currents"
+      },
+      {
+        "version": "1.0.0",
+        "date": "2024-11-01",
+        "notes": "Version initiale"
+      }
+    ]
+  },
+  {
+    "id": "calendar",
+    "name": "Calendrier",
+    "description": "Visualisez et g\u00e9rez vos \u00e9v\u00e9nements avec une vue mensuelle claire.",
+    "version": "1.0.0",
+    "author": "Modulo Team",
+    "icon": "calendar",
+    "color": "#9C27B0",
+    "category": "time",
+    "tags": [
+      "calendrier",
+      "\u00e9v\u00e9nements",
+      "agenda"
+    ],
+    "navKey": "calendar",
+    "navIcon": "calendar",
+    "navLabel": {
+      "fr": "Calendrier",
+      "en": "Calendar"
+    },
+    "renderFn": "renderCalendar",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/calendar.js",
+    "size": "10 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "date": "2024-11-01",
+        "notes": "Version initiale"
+      }
+    ]
+  },
+  {
+    "id": "diagrams",
+    "name": "Diagrammes",
+    "version": "1.0.0",
+    "author": "Modulo Team",
+    "description": "Cr\u00e9ez des diagrammes UML (classes, s\u00e9quences, flux) et exportez-les en PNG.",
+    "icon": "dashboard",
+    "color": "#00BCD4",
+    "category": "productivity",
+    "tags": [
+      "uml",
+      "diagramme",
+      "sch\u00e9ma",
+      "draw"
+    ],
+    "navKey": "diagrams",
+    "navIcon": "dashboard",
+    "navLabel": {
+      "fr": "Diagrammes",
+      "en": "Diagrams"
+    },
+    "renderFn": "renderDiagrams",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/diagrams.js",
+    "size": "38 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "date": "2025-04-03",
+        "notes": "Version initiale"
+      }
+    ]
+  },
+  {
+    "id": "dataeditor",
+    "name": "OpenStruct",
+    "version": "1.0.0",
+    "author": "Modulo Team",
+    "description": "\u00c9diteur de fichiers JSON, CSV, XML, TOML avec conversion et auto-indentation.",
+    "icon": "database",
+    "color": "#00BCD4",
+    "category": "productivity",
+    "tags": [
+      "json",
+      "csv",
+      "xml",
+      "toml",
+      "\u00e9diteur",
+      "conversion"
+    ],
+    "navKey": "dataeditor",
+    "navIcon": "database",
+    "navLabel": {
+      "fr": "OpenStruct",
+      "en": "OpenStruct"
+    },
+    "renderFn": "renderDataeditor",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/dataeditor.js",
+    "size": "32 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "date": "2025-04-03",
+        "notes": "Version initiale"
+      }
+    ]
+  },
+  {
+    "id": "perlin",
+    "name": "Perlin Noise",
+    "version": "1.0.0",
+    "author": "Modulo Team",
+    "description": "G\u00e9n\u00e9rateur de bruit de Perlin \u2014 PNG, GIF anim\u00e9, spritesheet. Seed, scale, octaves, couleur.",
+    "icon": "eye",
+    "color": "#9C27B0",
+    "category": "productivity",
+    "tags": [
+      "perlin",
+      "bruit",
+      "texture",
+      "gif",
+      "spritesheet",
+      "g\u00e9n\u00e9ratif"
+    ],
+    "navKey": "perlin",
+    "navIcon": "eye",
+    "navLabel": {
+      "fr": "Perlin Noise",
+      "en": "Perlin Noise"
+    },
+    "renderFn": "renderPerlin",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/perlin.js",
+    "size": "32 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "date": "2025-04-03",
+        "notes": "PNG, GIF, spritesheet"
+      }
+    ]
+  },
+  {
+    "id": "structogram",
+    "name": "Structogramme",
+    "version": "1.0.0",
+    "author": "Modulo Team",
+    "description": "\u00c9diteur de diagrammes de Nassi-Shneiderman. Instructions, conditions, boucles, appels. Export PNG/SVG.",
+    "icon": "list",
+    "color": "#5C6BC0",
+    "category": "productivity",
+    "tags": [
+      "nassi",
+      "shneiderman",
+      "nsd",
+      "algorithme",
+      "structorizer"
+    ],
+    "navKey": "structogram",
+    "navIcon": "list",
+    "navLabel": {
+      "fr": "Structogramme",
+      "en": "Structogram"
+    },
+    "renderFn": "renderStructogram",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/structogram.js",
+    "size": "50 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "date": "2025-04-03",
+        "notes": "Version initiale"
+      }
+    ]
+  },
+  {
+    "id": "clicker",
+    "name": "Clicker",
+    "version": "1.0.0",
+    "author": "Modulo Team",
+    "description": "Cookie-clicker style idle game. Click, upgrade, automate, prestige.",
+    "icon": "dashboard",
+    "color": "#FF6D00",
+    "category": "fun",
+    "tags": [
+      "game",
+      "clicker",
+      "idle",
+      "fun"
+    ],
+    "navKey": "clicker",
+    "navIcon": "dashboard",
+    "navLabel": {
+      "fr": "Clicker",
+      "en": "Clicker"
+    },
+    "renderFn": "renderClicker",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/clicker.js",
+    "size": "26 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "date": "2025-04-07",
+        "notes": "Initial release"
+      }
+    ]
+  },
+  {
+    "id": "charts",
+    "name": "Charts",
+    "version": "1.0.0",
+    "author": "Modulo Team",
+    "description": "Create bar, line, area, pie, donut and scatter charts. Edit data inline, export PNG/SVG.",
+    "icon": "dashboard",
+    "color": "#00BCD4",
+    "category": "productivity",
+    "tags": [
+      "chart",
+      "graph",
+      "visualization",
+      "data"
+    ],
+    "navKey": "charts",
+    "navIcon": "dashboard",
+    "navLabel": {
+      "fr": "Charts",
+      "en": "Charts"
+    },
+    "renderFn": "renderCharts",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/charts.js",
+    "size": "28 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "date": "2025-04-07",
+        "notes": "Initial release"
+      }
+    ]
+  },
+  {
+    "id": "qrcode",
+    "name": "QR Code",
+    "version": "1.0.0",
+    "author": "Modulo Team",
+    "description": "Generate QR codes from text, URL, email, WiFi, vCard or phone. Custom colors, logo overlay, export PNG/SVG.",
+    "icon": "eye",
+    "color": "#34A853",
+    "category": "productivity",
+    "tags": [
+      "qr",
+      "qrcode",
+      "url",
+      "wifi",
+      "vcard"
+    ],
+    "navKey": "qrcode",
+    "navIcon": "eye",
+    "navLabel": {
+      "fr": "QR Code",
+      "en": "QR Code"
+    },
+    "renderFn": "renderQrcode",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/qrcode.js",
+    "size": "23 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "date": "2025-04-07",
+        "notes": "Initial release"
+      }
+    ]
+  },
+  {
+    "id": "filetools",
+    "name": "File Tools",
+    "version": "1.0.0",
+    "author": "Modulo Team",
+    "description": "Convert images (PNG/JPG/WEBP/BMP), rotate, flip, resize, edit properties and export to PDF.",
+    "icon": "export",
+    "color": "#FF6D00",
+    "category": "productivity",
+    "tags": [
+      "image",
+      "convert",
+      "pdf",
+      "rotate",
+      "resize"
+    ],
+    "navKey": "filetools",
+    "navIcon": "export",
+    "navLabel": {
+      "fr": "File Tools",
+      "en": "File Tools"
+    },
+    "renderFn": "renderFiletools",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/filetools.js",
+    "size": "26 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "date": "2025-04-07",
+        "notes": "Initial release"
+      }
+    ]
+  },
+  {
+    "id": "pdftools",
+    "name": "PDF Tools",
+    "version": "1.0.0",
+    "author": "Modulo Team",
+    "description": "Merge, split, rotate, compress PDFs. Convert images to PDF and back. 100% local.",
+    "icon": "note",
+    "color": "#EA4335",
+    "category": "productivity",
+    "tags": [
+      "pdf",
+      "merge",
+      "split",
+      "rotate",
+      "compress"
+    ],
+    "navKey": "pdftools",
+    "navIcon": "note",
+    "navLabel": {
+      "fr": "PDF Tools",
+      "en": "PDF Tools"
+    },
+    "renderFn": "renderPdftools",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/pdftools.js",
+    "size": "26 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "date": "2025-04-08",
+        "notes": "Initial release"
+      }
+    ]
+  },
+  {
+    "id": "watermark",
+    "name": "Watermark",
+    "version": "1.0.0",
+    "author": "Modulo Team",
+    "description": "Add text or image watermarks to images. 9 positions, opacity, rotation, tile mode.",
+    "icon": "edit",
+    "color": "#9C27B0",
+    "category": "productivity",
+    "tags": [
+      "watermark",
+      "image",
+      "logo",
+      "stamp"
+    ],
+    "navKey": "watermark",
+    "navIcon": "edit",
+    "navLabel": {
+      "fr": "Watermark",
+      "en": "Watermark"
+    },
+    "renderFn": "renderWatermark",
+    "scriptUrl": "https://modulo-web-production.up.railway.app/modules/watermark.js",
+    "size": "14 KB",
+    "builtIn": false,
+    "downloads": 0,
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "date": "2025-04-08",
+        "notes": "Initial release"
+      }
+    ]
+  }
+]

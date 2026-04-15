@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Modulo</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body { display:flex; align-items:center; justify-content:center; min-height:100vh; text-align:center; }
+    .err-code {
+      font-family:'Syne',sans-serif; font-size:clamp(96px,20vw,180px);
+      font-weight:800; letter-spacing:-6px; line-height:1;
+      background:linear-gradient(135deg,#4285F4,#9C27B0);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      background-clip:text; margin-bottom:16px;
+    }
+    .err-title { font-family:'Syne',sans-serif; font-size:24px; font-weight:700; margin-bottom:10px; }
+    .err-sub   { font-size:15px; color:var(--text-secondary); max-width:360px; margin:0 auto 32px; line-height:1.6; }
+  </style>
+</head>
+<body>
+  <div>
+    <div class="err-code">404</div>
+    <div class="err-title">Page not found</div>
+    <p class="err-sub">The page you're looking for doesn't exist or has been moved.</p>
+    <a href="/" class="btn btn-primary">← Back to home</a>
+  </div>
+</body>
+</html>
