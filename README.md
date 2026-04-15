@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://modulo-web-production.up.railway.app/favicon.svg" width="72" height="72" alt="Modulo logo">
+<img src="https://github.com/Andras-corda/modulo-app/blob/main/modulo-app/assets/icons/icon.png" width="72" height="72" alt="Modulo logo">
 
 # Modulo
 
